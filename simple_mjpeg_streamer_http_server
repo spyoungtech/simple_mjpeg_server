@@ -6,11 +6,9 @@
 import cv2
 import Image
 from BaseHTTPServer import BaseHTTPRequestHandler,HTTPServer
-import numpy
 import StringIO
 import time
 capture=None
-
 
 class CamHandler(BaseHTTPRequestHandler):
 	def do_GET(self):
