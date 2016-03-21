@@ -2,6 +2,7 @@
 '''
 	Author: Igor Maculan - n3wtron@gmail.com
 	A Simple mjpg stream http server
+	License: GPL v3
 '''
 import cv2
 import Image
