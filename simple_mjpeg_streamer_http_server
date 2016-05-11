@@ -2,11 +2,12 @@
 '''
 	Author: Igor Maculan - n3wtron@gmail.com
 	A Simple mjpg stream http server
-	License: GPL v3
 '''
 import cv2
 import Image
+import threading
 from BaseHTTPServer import BaseHTTPRequestHandler,HTTPServer
+from SocketServer import ThreadingMixIn
 import StringIO
 import time
 capture=None
@@ -44,6 +45,10 @@ class CamHandler(BaseHTTPRequestHandler):
 			self.wfile.write('</body></html>')
 			return
 
+
+class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
+	"""Handle requests in a separate thread."""
+
 def main():
 	global capture
 	capture = cv2.VideoCapture(0)
@@ -52,7 +57,7 @@ def main():
 	capture.set(cv2.cv.CV_CAP_PROP_SATURATION,0.2);
 	global img
 	try:
-		server = HTTPServer(('',8080),CamHandler)
+		server = ThreadedHTTPServer(('localhost', 8080), CamHandler)
 		print "server started"
 		server.serve_forever()
 	except KeyboardInterrupt:
